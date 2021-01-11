@@ -1,0 +1,57 @@
+<DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>frappe.js</title>
+    <sctipt type="module" src="o.mjs">
+    <script type="module">
+      "use strict"
+      import {Universe, VM} from "./o.mjs"
+      const u = new Universe(
+        (stream)=> {
+          stream("orderReceived", () => {})
+          stream("orderConfirmed", () => {})
+          stream("orderRejected", () => {})
+          stream("orderPackaged", () => {})
+          stream("orderDelivered", () => {})
+          stream("orderLost", () => {})
+        },
+        (object) => {
+          object( "orderConfirmator",
+                  (props) => { },
+                  (prop) => {
+                    prop()
+                    prop()
+                    prop()
+                  },
+                  (reaction) => {
+                    reation("orderReceived", handler, ["orderConfirmed", "orderRejected"])
+                  } )
+          object( "orderPackager",
+                  (props) => { },
+                  (prop) => {
+                    prop()
+                    prop()
+                    prop()
+                  },
+                  (reaction) => {
+                    reation("orderConfirmed", handler, ["orderPackaged"])
+                  } )
+          object( "orderDeliverer",
+                  (props) => {},
+                  (prop) => {
+                    prop()
+                    prop()
+                    prop()
+                  },
+                  (reaction) => {
+                    reation("orderPackaged", handler, ["orderDelivered", "orderLost"])
+                  } )
+        }
+      )
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
