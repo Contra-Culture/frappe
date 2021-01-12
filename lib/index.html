@@ -25,7 +25,7 @@
                     prop()
                   },
                   (reaction) => {
-                    reation("orderReceived", handler, ["orderConfirmed", "orderRejected"])
+                    reaction("orderReceived", (msg) => { }, ["orderConfirmed", "orderRejected"])
                   } )
           object( "orderPackager",
                   (props) => { },
@@ -35,7 +35,7 @@
                     prop()
                   },
                   (reaction) => {
-                    reation("orderConfirmed", handler, ["orderPackaged"])
+                    reaction("orderConfirmed", (msg) => { }, ["orderPackaged"])
                   } )
           object( "orderDeliverer",
                   (props) => {},
@@ -45,7 +45,7 @@
                     prop()
                   },
                   (reaction) => {
-                    reation("orderPackaged", handler, ["orderDelivered", "orderLost"])
+                    reaction("orderPackaged", (msg) => { }, ["orderDelivered", "orderLost"])
                   } )
         }
       )
