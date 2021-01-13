@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>frappe.js</title>
-    <sctipt type="module" src="o.mjs">
+    <sctipt type="module" src="o.mjs"></sctipt>
     <script type="module">
-      "use strict"
       import {Universe, VM} from "./o.mjs"
       const u = new Universe(
         (stream)=> {
@@ -50,6 +49,32 @@
         }
       )
       u.inspect()
+    </script>
+    <script type="module" src="app.mjs"></script>
+    <script type="module">
+      import {App} from "./app.mjs"
+
+      const app = new App("myApp",
+                          document,
+                          ()=>{},
+                          ()=>{},
+                          (node) => { node("root",
+                                           { somaVal: true,
+                                           },
+                                           (chunk) => {
+                                             return chunk === ""
+                                           },
+                                           (node) => { node("articles",
+                                                              { anotherVal: false,
+                                                              },
+                                                              (chunk) => { return chunk === "articles" },
+                                                              (node) => {})
+                                                      }
+                                          )
+                                    }
+                         )
+      console.log("app: ", app)
+      console.log("findScreen: ", app.findRoute(["", "articles"]))
     </script>
   </head>
   <body>

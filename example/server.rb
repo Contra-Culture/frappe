@@ -18,5 +18,6 @@ app = Rack::Static.new nil,
                        header_rules: [
                          [['js','mjs'], "Content-Type" => "application/javascript"],
                          [['html'], "Content-Type" => "text/html"],
+                         [['css'], "Content-Type" => "text/stylesheet"],
                        ]
 Rack::Handler::WEBrick.run app
