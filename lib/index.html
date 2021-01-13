@@ -54,23 +54,32 @@
     <script type="module">
       import {App} from "./app.mjs"
 
-      window.app = new App("myApp",
-                          window,
-                          document.querySelector("#app"),
-                          { data: { screen: "someScreen",
-                                    somaVal: true,
-                                  },
-                            children: { "articles": { data: { screen: "anotherScreen",
-                                                              anotherVal: false,
-                                                            },
-                                                      matches: (chunk) => { return chunk === "articles" },                                                      }
-                                                    }
-                                      }
-                         )
+      window.app = new App( "myApp",
+                            window,
+                            document.querySelector("#app"),
+                            { data: { screen: "root",
+                                      someVal: true,
+                                    },
+                              children: { "articles": { data: { screen: "articles",
+                                                                anotherVal: false,
+                                                              },
+                                                        children: { ":articleID": { data: { screen: "article",
+                                                                                          },
+                                                                                    matches: (chunk) => { return true }
+                                                                                  }
+                                                                  }
+                                                      }
+                                        }
+                            }
+                          )
       console.log("app: ", app)
     </script>
   </head>
   <body>
-    <div id="app"></div>
+    <button onclick="app.URLHelpers.root()">Root</button>
+    <button onclick="app.URLHelpers.articles()">Articles</button>
+    <div id="app">
+
+    </div>
   </body>
 </html>
