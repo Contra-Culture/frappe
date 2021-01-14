@@ -60,10 +60,12 @@
                             { data: { screen: "root",
                                       someVal: true,
                                     },
-                              children: { "articles": { data: { screen: "articles",
+                              children: { "articles": { as: "articles",
+                                                        data: { screen: "articles",
                                                                 anotherVal: false,
                                                               },
-                                                        children: { ":articleID": { data: { screen: "article",
+                                                        children: { ":articleID": { as: "article",
+                                                                                    data: { screen: "article",
                                                                                           },
                                                                                     matches: (chunk) => { return true }
                                                                                   }
@@ -78,6 +80,8 @@
   <body>
     <button onclick="app.URLHelpers.root()">Root</button>
     <button onclick="app.URLHelpers.articles()">Articles</button>
+    <button onclick="app.URLHelpers.article({articleID: 'My Article'})">Article: "My Article"</button>
+
     <div id="app">
 
     </div>
