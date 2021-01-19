@@ -52,7 +52,7 @@
     </script>
     <script type="module" src="app.mjs"></script>
     <script type="module" src="view.mjs"></script>
-
+    <script type="module" src="registry.mjs"></script>
     <script type="module">
       import { App } from "./app.mjs"
       import { view } from "./view.mjs"
@@ -177,6 +177,16 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
                             }
                           )
       console.log("app: ", app)
+    </script>
+    <script type="module">
+      import { registry, notUndefined, noisyHandlers } from "./registry.mjs"
+
+      let {get, set} = registry(notUndefined, noisyHandlers)
+      get("some/path/Name".split("/"))
+      set("some/path/Name".split("/"), true)
+      get("some/path/Name".split("/"))
+      set("some/path/Name".split("/"), false)
+      set("some/path/NotUndefined".split("/"), undefined)
     </script>
     <style>
       html, body {
