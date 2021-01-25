@@ -195,25 +195,38 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       const stylesReg = stylesRegistry()
       stylesReg.set("custom/buttons/plain".split("/"), [{prop: "background-color", values: ["#e5e6e7"]}])
 
-      const CSSOMRoot = stylesheet("my-stylesheet", document.head, stylesReg, (css) => {
-        //css.namespace("Some.xml")
-        css.import({url: "some-path.url", media: "screen"})
-        css.page({
-          selector: ":first", setup: (css) => {
-            css.prop({ prop: "color", values: "#ff0000" })
-          }
-        })
-        css.style({selector: "body, html", setup: (css) => {
-          css.mixin("custom/buttons/plain".split("/"))
-          css.prop({prop: "color", values: "#444444"})
-        }})
-        css.media({media: ["screen", "(min-width: 900px)"], setup: (css) => {
-          css.style({selector: "h1", setup: (css) => {
-            css.prop({prop:"color", values: "#f40569"})
+      const cssText = stylesheet({
+        registry: stylesReg,
+        setup: (dsl) => {
+          // dsl.namespace("Some.xml")
+          dsl.import({url: "some-path.url", media: "screen"})
+          dsl.page({
+            selector: ":first", setup: (dsl) => {
+              dsl.prop({ prop: "color", values: "#ff0000" })
+            }
+          })
+          dsl.style({selector: "body, html", setup: (dsl) => {
+            dsl.mixin("custom/buttons/plain".split("/"))
+            dsl.prop({prop: "color", values: "#444444"})
           }})
-        }})
+          dsl.media({media: ["screen", "(min-width: 900px)"], setup: (dsl) => {
+            dsl.style({selector: "h1", setup: (dsl) => {
+              dsl.prop({prop:"color", values: "#f40569"})
+            }})
+          }})
+        },
       })
-      console.log(CSSOMRoot)
+
+      console.log("cssText", cssText)
+
+      const style = document.createElement("style")
+      style.textContent = cssText
+      document.head.appendChild(style)
+    </script>
+    <script type="module" src="webComponent.mjs"></script>
+    <script type="module">
+      import { ns } from "./webComponent.mjs"
+      
     </script>
     <style>
       html, body {
