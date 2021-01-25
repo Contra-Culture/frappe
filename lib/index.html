@@ -188,6 +188,33 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       set("some/path/Name".split("/"), false)
       set("some/path/NotUndefined".split("/"), undefined)
     </script>
+    <script type="module" src="style.mjs"></script>
+    <script type="module">
+      import { stylesRegistry, prop, stylesheet } from "./style.mjs"
+
+      const stylesReg = stylesRegistry()
+      stylesReg.set("custom/buttons/plain".split("/"), [{prop: "background-color", values: ["#e5e6e7"]}])
+
+      const CSSOMRoot = stylesheet("my-stylesheet", document.head, stylesReg, (css) => {
+        //css.namespace("Some.xml")
+        css.import({url: "some-path.url", media: "screen"})
+        css.page({
+          selector: ":first", setup: (css) => {
+            css.prop({ prop: "color", values: "#ff0000" })
+          }
+        })
+        css.style({selector: "body, html", setup: (css) => {
+          css.mixin("custom/buttons/plain".split("/"))
+          css.prop({prop: "color", values: "#444444"})
+        }})
+        css.media({media: ["screen", "(min-width: 900px)"], setup: (css) => {
+          css.style({selector: "h1", setup: (css) => {
+            css.prop({prop:"color", values: "#f40569"})
+          }})
+        }})
+      })
+      console.log(CSSOMRoot)
+    </script>
     <style>
       html, body {
         margin: 0 20px;
@@ -242,7 +269,8 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
   </head>
   <body>
     <div id="app">
-
+body
+<h1>hello</h1>
     </div>
   </body>
 </html>
