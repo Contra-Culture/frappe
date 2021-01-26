@@ -56,59 +56,60 @@
     <script type="module">
       import { App } from "./app.mjs"
       import { viewGen } from "./view.mjs"
-      const view = viewGen((use) => {
-        use("testExt", () => { this.safe("<pre>testExt<pre>") })
+      const view = viewGen((injection) => {
+        injection("testInjection", function(dsl) { dsl.safe("<pre>testInjection<pre>") })
       })
       const layout = (data) => {
-        return view(h => {
-          h.tag("header", null, h => {
-            h.tag("h1", null, h => {
-              h.safe("MyApp")
+        return view((dsl, injections) => {
+         injections.testInjection()
+         dsl.tag("header", null, dsl => {
+           dsl.tag("h1", null, dsl => {
+             dsl.safe("MyApp")
             })
           })
-          h.tag("menu", null, h => {
-            h.tag("ul", null, h => {
-              h.tag("li", null, h => {
-                h.tag("a", { class:"menu-link", href:"javascript://void(0);", onclick: "app.URLHelpers.root()"}, h => {
-                  h.safe("Dashboard")
+         dsl.tag("menu", null, dsl => {
+           dsl.tag("ul", null, dsl => {
+             dsl.tag("li", null, dsl => {
+               dsl.tag("a", { class:"menu-link", href:"javascript://void(0);", onclick: "app.URLHelpers.root()"}, dsl => {
+                 dsl.safe("Dashboard")
                 })
               })
-              h.tag("li", null, h => {
-                h.tag("a", { class: "menu-link", href: "javascript://void(0);", onclick: "app.URLHelpers.articles()" }, h => {
-                  h.safe("Archive")
+             dsl.tag("li", null, dsl => {
+               dsl.tag("a", { class: "menu-link", href: "javascript://void(0);", onclick: "app.URLHelpers.articles()" }, dsl => {
+                 dsl.safe("Archive")
                 })
               })
             })
           })
-          h.tag("main", null, h => {
-            h.tag("p", null, h => {
-              h.safe(`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis convallis pulvinar. Interdum et malesuada
+         dsl.tag("main", null, dsl => {
+           dsl.tag("p", null, dsl => {
+             dsl.safe(`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis convallis pulvinar. Interdum et malesuada
               fames ac ante ipsum primis in faucibus.Praesent molestie augue tellus, vel volutpat massa vestibulum at.Ut lacus
 mauris, iaculis vitae posuere vel, iaculis id purus.Aliquam pellentesque laoreet est ut luctus.Donec nulla orci,
                 hendrerit non pulvinar id, viverra vitae libero.Morbi id faucibus risus, nec accumsan mi.Duis ac mollis lacus.Sed
 feugiat aliquam ullamcorper.`)
             })
-            h.tag("p", null, h => {
-              h.safe(`Ut ultrices ante nec varius malesuada. Mauris vel pharetra justo. Pellentesque sit amet ultrices massa. Sed bibendum
+           dsl.tag("p", null, dsl => {
+             dsl.safe(`Ut ultrices ante nec varius malesuada. Mauris vel pharetra justo. Pellentesque sit amet ultrices massa. Sed bibendum
 hendrerit nibh, non lobortis arcu tempor non. Phasellus in risus quis est tristique scelerisque. Nam quis congue nunc.
 Sed eros justo, feugiat eget pharetra in, fringilla elementum ex. Duis id ullamcorper arcu. Aenean venenatis orci
 eleifend pretium efficitur. Aliquam vehicula accumsan nulla nec efficitur. Sed eleifend sed diam vitae varius. Fusce vel
 sapien nisi. Vestibulum ullamcorper dolor vel dui hendrerit ullamcorper. Suspendisse potenti.`)
             })
-            h.tag("p", null, h => {
-              h.safe(`Cras elementum metus ac feugiat venenatis. Integer eleifend vitae nulla ut bibendum. Maecenas imperdiet magna quis justo
+           dsl.tag("p", null, dsl => {
+             dsl.safe(`Cras elementum metus ac feugiat venenatis. Integer eleifend vitae nulla ut bibendum. Maecenas imperdiet magna quis justo
 congue imperdiet. Aenean pellentesque congue luctus. Vivamus mattis sollicitudin semper. Maecenas suscipit libero id
 orci aliquet aliquet efficitur facilisis risus. Ut nec venenatis justo.`)
             })
-            h.tag("p", null, h => {
-              h.safe(`Etiam accumsan placerat dui pretium egestas. Suspendisse fringilla, lectus eget consectetur rutrum, libero velit iaculis
+           dsl.tag("p", null, dsl => {
+             dsl.safe(`Etiam accumsan placerat dui pretium egestas. Suspendisse fringilla, lectus eget consectetur rutrum, libero velit iaculis
 ligula, in laoreet tellus odio a eros. Maecenas eget efficitur massa. Nam sodales velit quis tempor pulvinar. Aenean in
 turpis sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus vel
 sem sed dui malesuada condimentum vel in augue. Cras scelerisque convallis volutpat. Etiam ac dapibus felis. Nullam
 purus eros, condimentum vel ultricies vitae, tincidunt ac magna.`)
             })
-            h.tag("p", null, h => {
-              h.safe(`Suspendisse consectetur pretium odio, ac tempus ex tempor a. Interdum et malesuada fames ac ante ipsum primis in
+           dsl.tag("p", null, dsl => {
+             dsl.safe(`Suspendisse consectetur pretium odio, ac tempus ex tempor a. Interdum et malesuada fames ac ante ipsum primis in
 faucibus. Proin felis tellus, bibendum eu dolor sed, cursus tempor arcu. Pellentesque non odio id neque mollis accumsan.
 Integer tempus odio eu luctus porta. Pellentesque tempor tincidunt neque tempor commodo. Etiam viverra nisi sed eros
 bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum primis in faucibus.`)
@@ -178,7 +179,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
                                         }
                             }
                           )
-      console.log("app: ", app)
+      console.log("app: ", app, layout({}))
     </script>
     <script type="module">
       import { registry, notUndefined, noisyHandlers } from "./registry.mjs"
