@@ -55,8 +55,10 @@
     <script type="module" src="registry.mjs"></script>
     <script type="module">
       import { App } from "./app.mjs"
-      import { view } from "./view.mjs"
-
+      import { viewGen } from "./view.mjs"
+      const view = viewGen((use) => {
+        use("testExt", () => { this.safe("<pre>testExt<pre>") })
+      })
       const layout = (data) => {
         return view(h => {
           h.tag("header", null, h => {
@@ -216,9 +218,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
           }})
         },
       })
-
       console.log("cssText", cssText)
-
       const style = document.createElement("style")
       style.textContent = cssText
       document.head.appendChild(style)
@@ -226,7 +226,12 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
     <script type="module" src="webComponent.mjs"></script>
     <script type="module">
       import { ns } from "./webComponent.mjs"
-      
+
+      const wcomp = ns("app")
+      wcomp({
+        xtag: "comp",
+
+      })
     </script>
     <style>
       html, body {
