@@ -227,10 +227,63 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
     <script type="module" src="webComponent.mjs"></script>
     <script type="module">
       import { ns } from "./webComponent.mjs"
+      import { stylesRegistry, prop, stylesheet } from "./style.mjs"
 
       const wcomp = ns("app")
       wcomp({
         xtag: "comp",
+        attrs: {},
+        stylesReg: stylesRegistry(),
+        stylesheetSetup: (dsl) => {
+          // dsl.namespace("Some.xml")
+          dsl.import({
+            url: "some-path.url",
+            media: "screen",
+          })
+          dsl.page({
+            selector: ":first",
+            setup: (dsl) => {
+              dsl.prop({
+                prop: "color",
+                values: "#ff0000",
+              })
+            }
+          })
+          dsl.style({
+            selector: "body, html",
+            setup: (dsl) => {
+              dsl.mixin("custom/buttons/plain".split("/"))
+              dsl.prop({
+                prop: "color",
+                values: "#444444",
+              })
+            }
+          })
+          dsl.media({
+            media: ["screen", "(min-width: 900px)"],
+            setup: (dsl) => {
+              dsl.style({
+                selector: "h1",
+                setup: (dsl) => {
+                  dsl.prop({
+                    prop: "color",
+                    values: "#f40569",
+                  })
+                }
+              })
+            }
+          })
+        },
+        templateSetup: (dsl, injections) => {
+          injections.style()
+          dsl.tag("h1", {}, (dsl) => {
+            dsl.unsafe(injections.style())
+          })
+        },
+
+
+
+
 
       })
     </script>
