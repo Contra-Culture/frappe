@@ -283,15 +283,23 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
         templateSetup: (dsl, injections) => {
           injections.style()
           dsl.tag("h1", {}, (dsl) => {
-            dsl.unsafe(injections.style())
+            dsl.unsafe("Header")
           })
         },
-
-
-
-
-
+        listensEvents: [
+          {
+            name: "click",
+            handler: (evt) => { console.log("clicked!", evt) }
+          },
+        ],
+        hooks: {
+          connected: () => { console.log("<x-comp> connected!")},
+          disconnected: () => { console.log("<x-comp> disconnected!") },
+          adopted: () => { console.log(tag, "<x-comp> adopted!")},
+          attrChanged: (name, oldVal, newVal) => { console.log("<x-comp> attrChanged:", name, oldVal, newVal) },
+        }
       })
+      document.body.appendChild(document.createElement("x-comp"))
     </script>
     <style>
       html, body {
