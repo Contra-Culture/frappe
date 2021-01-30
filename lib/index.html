@@ -3,13 +3,65 @@
   <head>
     <meta charset="utf-8" />
     <title>frappe.js</title>
-    <sctipt type="module" src="o.mjs"></sctipt>
     <script type="module" src="loader.mjs"></script>
     <script type="module">
       import {
-        loader,
+        loader as ldr,
       } from "./loader.mjs"
 
+      const loader = ldr(window)
+
+      loader.load(["univ"], {
+        title: "registry",
+        src: "registry.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "objects framework",
+        src: "o.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "styling DSL and toolkit",
+        src: "style.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "view library",
+        src: "view.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "application framework",
+        src: "app.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "schema library",
+        src: "schema.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "Web Components library",
+        src: "webComponent.mjs",
+        async: true,
+        defer: false,
+      })
+      loader.load(["univ"], {
+        title: "models library",
+        src: "model.mjs",
+        async: true,
+        defer: false,
+      })
+    </script>
+
+    <script type="module">
       import {
         Universe,
         VM,
@@ -59,9 +111,6 @@
       )
       u.inspect()
     </script>
-    <script type="module" src="app.mjs"></script>
-    <script type="module" src="view.mjs"></script>
-    <script type="module" src="registry.mjs"></script>
     <script type="module">
       import { App } from "./app.mjs"
       import { viewGen } from "./view.mjs"
@@ -230,7 +279,11 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       console.log("app: ", app, layout({}))
     </script>
     <script type="module">
-      import { registry, notUndefined, noisyHandlers } from "./registry.mjs"
+      import {
+        registry,
+        notUndefined,
+        noisyHandlers,
+      } from "./registry.mjs"
 
       let {get, set} = registry(notUndefined, noisyHandlers)
       get("some/path/Name".split("/"))
@@ -239,9 +292,12 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       set("some/path/Name".split("/"), false)
       set("some/path/NotUndefined".split("/"), undefined)
     </script>
-    <script type="module" src="style.mjs"></script>
     <script type="module">
-      import { stylesRegistry, prop, stylesheet } from "./style.mjs"
+      import {
+        stylesRegistry,
+        prop,
+        stylesheet,
+      } from "./style.mjs"
 
       const stylesReg = stylesRegistry()
       stylesReg.set("custom/buttons/plain".split("/"), [{prop: "background-color", values: ["#e5e6e7"]}])
@@ -272,10 +328,16 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       style.textContent = cssText
       document.head.appendChild(style)
     </script>
-    <script type="module" src="webComponent.mjs"></script>
     <script type="module">
-      import { ns } from "./webComponent.mjs"
-      import { stylesRegistry, prop, stylesheet } from "./style.mjs"
+      import {
+        ns,
+      } from "./webComponent.mjs"
+
+      import {
+        stylesRegistry,
+        prop,
+        stylesheet,
+      } from "./style.mjs"
 
       const wcomp = ns("app")
       const stylesReg = stylesRegistry()
@@ -403,8 +465,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
   </head>
   <body>
     <div id="app">
-body
-<h1>hello</h1>
+      <h1>hello</h1>
     </div>
   </body>
 </html>
