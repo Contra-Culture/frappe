@@ -118,67 +118,106 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
         })
       }
 
-      window.app = new App( "myApp",
-                            window,
-                            document.querySelector("#app"),
-                            // widgets
-                            { "widgetA": { prepare: () => { },
-                                           render:  () => { },
-                                           exit:    () => { },
-                                         },
-                              "widgetB": { prepare: () => { },
-                                           render:  () => { },
-                                           exit:    () => { },
-                                         },
-                              "widgetC": { prepare: () => { },
-                                           render:  () => { },
-                                           exit:    () => { },
-                                         },
-                            },
-                            // layouts
-                            { "main": { widgets: ["widgetA", "widgetB", "widgetC"],
-                                        prepare: () => { },
-                                        render:  layout,
-                                        exit:    () => { },
-                                      },
-                            },
-                            // screens
-                            { "dashboard": { layout: "main",
-                                             widgets: ["widgetA", "widgetB", "widgetC"],
-                                             prepare: () => { return `` },
-                                             render:  (data) => { return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>` },
-                                             exit:    () => { },
-                                           },
-                              "articles": { layout: "main",
-                                            widgets: ["widgetA", "widgetB", "widgetC"],
-                                            prepare: () => { },
-                                            render:  (data) => { return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>` },
-                                            exit:    () => { },
-                                          },
-                              "article": { layout: "main",
-                                           widgets: ["widgetA", "widgetB", "widgetC"],
-                                           prepare: () => { },
-                                           render:  (data) => { return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>` },
-                                           exit:    () => { },
-                                         },
-                            },
-                            { data: { screen: "dashboard",
-                                      someVal: true,
-                                    },
-                              children: { "articles": { as: "articles",
-                                                        data: { screen: "articles",
-                                                                anotherVal: false,
-                                                              },
-                                                        children: { ":articleID": { as: "article",
-                                                                                    data: { screen: "article",
-                                                                                          },
-                                                                                    matches: (chunk) => { return true }
-                                                                                  }
-                                                                  }
-                                                      }
-                                        }
-                            }
-                          )
+      window.app = new App({
+        name: "myApp",
+        window,
+        HTMLConatainer: document.querySelector("#app"),
+        widgetsSpec: {
+          "widgetA": {
+            prepare: () => { },
+            render: () => { },
+            exit: () => { },
+          },
+          "widgetB": {
+            prepare: () => { },
+            render: () => { },
+            exit: () => { },
+          },
+          "widgetC": {
+            prepare: () => { },
+            render: () => { },
+            exit: () => { },
+          },
+        },
+        layoutsSpec: {
+          "main": {
+            widgets: [
+              "widgetA",
+              "widgetB",
+              "widgetC",
+            ],
+            prepare: () => { },
+            render: layout,
+            exit: () => { },
+          },
+        },
+        screensSpec: {
+          "dashboard": {
+            layout: "main",
+            widgets: [
+              "widgetA",
+              "widgetB",
+              "widgetC",
+            ],
+            prepare: () => {
+              return ``
+            },
+            render: (data) => {
+              return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>`
+            },
+            exit: () => { },
+          },
+          "articles": {
+            layout: "main",
+            widgets: [
+              "widgetA",
+              "widgetB",
+              "widgetC",
+            ],
+            prepare: () => { },
+            render:  (data) => {
+              return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>`
+            },
+            exit:    () => { },
+          },
+          "article": {
+            layout: "main",
+            widgets: [
+              "widgetA",
+              "widgetB",
+              "widgetC",
+            ],
+            prepare: () => { },
+            render: (data) => {
+              return `<div style="width:960px;margin: 50px auto;padding:20px;background-color:#e5e7e9;border:1px solid #a5a7a9;">screen: ${data.screen}</div>`
+            },
+            exit: () => { },
+          },
+        },
+        routesSpec: {
+          data: {
+            screen: "dashboard",
+            someVal: true,
+          },
+          children: {
+            "articles": {
+              as: "articles",
+                data: {
+                  screen: "articles",
+                  anotherVal: false,
+                },
+                children: {
+                  ":articleID": {
+                    as: "article",
+                    data: { screen: "article",
+                  },
+                  matches: (chunk) => { return true }
+                }
+              }
+            }
+          }
+        },
+      })
       console.log("app: ", app, layout({}))
     </script>
     <script type="module">
