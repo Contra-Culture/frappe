@@ -4,8 +4,17 @@
     <meta charset="utf-8" />
     <title>frappe.js</title>
     <sctipt type="module" src="o.mjs"></sctipt>
+    <script type="module" src="loader.mjs"></script>
     <script type="module">
-      import {Universe, VM} from "./o.mjs"
+      import {
+        loader,
+      } from "./loader.mjs"
+
+      import {
+        Universe,
+        VM,
+      } from "./o.mjs"
+
       const u = new Universe(
         (stream)=> {
           stream("orderReceived", () => {})
