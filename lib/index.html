@@ -293,13 +293,13 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
           },
         ],
         hooks: {
-          connected: () => { console.log("<x-comp> connected!")},
-          disconnected: () => { console.log("<x-comp> disconnected!") },
-          adopted: () => { console.log(tag, "<x-comp> adopted!")},
-          attrChanged: (name, oldVal, newVal) => { console.log("<x-comp> attrChanged:", name, oldVal, newVal) },
+          connected: () => { console.log("<app-comp> connected!")},
+          disconnected: () => { console.log("<app-comp> disconnected!") },
+          adopted: () => { console.log(tag, "<app-comp> adopted!")},
+          attrChanged: (name, oldVal, newVal) => { console.log("<app-comp> attrChanged:", name, oldVal, newVal) },
         }
       })
-      document.body.appendChild(document.createElement("x-comp"))
+      document.body.appendChild(document.createElement("app-comp"))
     </script>
     <style>
       html, body {
