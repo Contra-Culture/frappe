@@ -56,3 +56,4 @@ A flow represents a complex dialogue, which consists of several screens and dire
 2. Prefer declarative approach:
    1. use eDSL constructors to construct a correct business need fulfilling function
 3. Prefer Golang-like error-values over exceptions
+4. Use `__<name>` pattern for the functions wich are using only together with `.bind()`
