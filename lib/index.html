@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>frappe.js</title>
+    <script type="module" src="util/registry.mjs"></script>
     <script type="module" src="loader.mjs"></script>
     <script type="module">
       import {
@@ -11,49 +12,43 @@
 
       const loader = ldr(window)
 
-      loader.load(["univ"], {
-        title: "registry",
-        src: "registry.mjs",
-        async: true,
-        defer: false,
-      })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "objects framework",
         src: "o.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "styling DSL and toolkit",
         src: "style.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "view library",
         src: "view.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "application framework",
         src: "app.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "schema library",
         src: "schema.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "Web Components library",
         src: "webComponent.mjs",
         async: true,
         defer: false,
       })
-      loader.load(["univ"], {
+      loader.load(["tools"], {
         title: "models library",
         src: "model.mjs",
         async: true,
@@ -112,8 +107,15 @@
       u.inspect()
     </script>
     <script type="module">
-      import { App } from "./app.mjs"
-      import { viewGen } from "./view.mjs"
+      import {
+        Univ,
+        App,
+      } from "./app.mjs"
+
+      import {
+        viewGen,
+      } from "./view.mjs"
+
       const view = viewGen((injection) => {
         injection("testInjection", function(dsl) { dsl.safe("<pre>testInjection<pre>") })
       })
@@ -282,15 +284,27 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       import {
         registry,
         notUndefined,
-        noisyHandlers,
-      } from "./registry.mjs"
+        noisyNotFoundHandler,
+        noisyAlreadyDefinedHandler,
+        noisyNotValidHandler,
+      } from "./util/registry.mjs"
 
-      let {get, set} = registry(notUndefined, noisyHandlers)
-      get("some/path/Name".split("/"))
-      set("some/path/Name".split("/"), true)
-      get("some/path/Name".split("/"))
-      set("some/path/Name".split("/"), false)
-      set("some/path/NotUndefined".split("/"), undefined)
+      let {
+        getValue,
+        setValue,
+        getValues,
+        hasPath,
+      } = registry({
+        validator: notUndefined,
+        notFoundHandler: noisyNotFoundHandler,
+        alreadyDefinedHandler: noisyAlreadyDefinedHandler,
+        notValidHandler: noisyNotValidHandler,
+      })
+      getValue("some/path/Name".split("/"))
+      setValue("some/path/Name".split("/"), true)
+      getValue("some/path/Name".split("/"))
+      setValue("some/path/Name".split("/"), false)
+      setValue("some/path/NotUndefined".split("/"), undefined)
     </script>
     <script type="module">
       import {
@@ -300,7 +314,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
       } from "./style.mjs"
 
       const stylesReg = stylesRegistry()
-      stylesReg.set("custom/buttons/plain".split("/"), [{prop: "background-color", values: ["#e5e6e7"]}])
+      stylesReg.setValue("custom/buttons/plain".split("/"), [{prop: "background-color", values: ["#e5e6e7"]}])
 
       const cssText = stylesheet({
         registry: stylesReg,
@@ -341,7 +355,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
 
       const wcomp = ns("app")
       const stylesReg = stylesRegistry()
-      stylesReg.set("custom/buttons/plain".split("/"), [{ prop: "background-color", values: ["#e5e6e7"] }])
+      stylesReg.setValue("custom/buttons/plain".split("/"), [{ prop: "background-color", values: ["#e5e6e7"] }])
 
       const style = stylesheet({
         registry: stylesReg,
