@@ -31,8 +31,8 @@
         defer: false,
       })
       loader.load(["tools"], {
-        title: "application framework",
-        src: "app.mjs",
+        title: "frappe - frontend application framework",
+        src: "frappe.mjs",
         async: true,
         defer: false,
       })
@@ -44,7 +44,7 @@
       })
       loader.load(["tools"], {
         title: "Web Components library",
-        src: "webComponent.mjs",
+        src: "webc.mjs",
         async: true,
         defer: false,
       })
@@ -110,7 +110,7 @@
       import {
         Univ,
         App,
-      } from "./app.mjs"
+      } from "./frappe.mjs"
 
       import {
         viewGen,
@@ -345,7 +345,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
     <script type="module">
       import {
         ns,
-      } from "./webComponent.mjs"
+      } from "./webc.mjs"
 
       import {
         stylesRegistry,
