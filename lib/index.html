@@ -282,7 +282,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
     </script>
     <script type="module">
       import {
-        registry,
+        Registry,
         valueValidator,
         noisyNotFoundHandler,
         noisyAlreadyDefinedHandler,
@@ -294,7 +294,7 @@ bibendum, a bibendum lacus facilisis. Interdum et malesuada fames ac ante ipsum 
         setValue,
         getValues,
         hasPath,
-      } = registry({
+      } = new Registry({
         validator: valueValidator,
         notFoundHandler: noisyNotFoundHandler,
         alreadyDefinedHandler: noisyAlreadyDefinedHandler,
