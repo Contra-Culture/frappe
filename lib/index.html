@@ -7,10 +7,10 @@
     <script type="module" src="loader.mjs"></script>
     <script type="module">
       import {
-        loader as ldr,
+        Loader,
       } from "./loader.mjs"
 
-      const loader = ldr(window)
+      const loader = new Loader()
 
       loader.load(["tools"], {
         title: "objects framework",
